@@ -1,12 +1,12 @@
-#!/usr/bin/python
-
 import numpy
 import random
 import players
 from board import TicTacToeBoard
+from tracker import StatisticsTracker
 
 EX = 1
 OH = -1
+EPOCHS = 10
 
 
 def playGame(playerOne, playerTwo):
@@ -17,21 +17,35 @@ def playGame(playerOne, playerTwo):
             playerOne.makeMove(board)
         else:
             playerTwo.makeMove(board)
-        print board
+        # print board
     if board.winner == EX:
         print "Player one won."
+        return 1
     elif board.winner == OH:
         print "Player two won."
+        return 0
     elif board.over:
         print "It was a draw."
+        return 0.5
     else:
         print "Someone fucked up."
+        return 42
 
 
 def main():
-    playerOne = players.MiniMaxPlayer(EX)
-    playerTwo = players.MiniMaxPlayer(OH)
-    playGame(playerOne, playerTwo)
+    tracker = StatisticsTracker("Random", "Minimax")
+    for i in xrange(EPOCHS):
+        ex = True
+        if random.randint(0, 1):
+            playerOne = players.RandomPlayer(EX)
+            playerTwo = players.MinimaxPlayer(OH)
+        else:
+            ex = False
+            playerOne = players.MinimaxPlayer(EX)
+            playerTwo = players.RandomPlayer(OH)
+        win = playGame(playerOne, playerTwo)
+        tracker.recordGame(ex, win)
+    tracker.printReport()
 
 
 if __name__ == '__main__':

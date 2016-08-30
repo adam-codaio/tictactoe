@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import copy
 import operator
 import random
@@ -30,10 +28,10 @@ class RandomPlayer(Player):
         board.markMove(i, j, self.marker)
 
 
-class MiniMaxPlayer(Player):
+class MinimaxPlayer(Player):
 
     def makeMove(self, board):
-        # Hard codes first move to speed up minimax
+        # Hard codes first move to speed up algorithm
         # Definitely works for boards of size 2 and 3, unsure about larger
         if board.turns_taken == 0:
             i = random.randint(0, board.SIZE - 1)

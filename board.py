@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import numpy
 import random
 import players
