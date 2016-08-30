@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import copy
+import math
 import numpy
 import operator
 import random
@@ -15,7 +16,7 @@ NUM_PLAYERS = 2
 class TicTacToeBoard:
 
     def __init__(self):
-        self.SIZE = 3
+        self.SIZE = 3 #This file does not support changing of the size
         self.turn = EX
         self.turns_taken = 0
         self.board = numpy.zeros((self.SIZE, self.SIZE))
@@ -34,7 +35,7 @@ class TicTacToeBoard:
                 self.winner = row_sum / self.SIZE
             elif abs(col_sum) == self.SIZE:
                 self.winner = col_sum / self.SIZE
-            elif ((i + j) % 2) == 0:
+            elif ((i + j) % 2) == 0: #This hacks for size = 3
                 diag_sum = 0
                 antidiag_sum = 0
                 for i in xrange(self.SIZE):
@@ -77,6 +78,17 @@ class RandomPlayer(Player):
 class MiniMaxPlayer(Player):
 
     def makeMove(self, board):
+        if board.turns_taken == 0:
+            i = random.randint(0, board.SIZE - 1)
+            if i == board.SIZE / 2: #Requires size = 3
+                board.markMove(i, i, self.marker)
+            else:
+                if random.randint(0, 1):
+                    board.markMove(i, i, self.marker)
+                else:
+                    board.markMove(i, board.SIZE - i - 1, self.marker)
+            return
+
         self.recurse(copy.deepcopy(board))
         i, j = self.move
         board.markMove(i, j, self.marker)
@@ -125,7 +137,7 @@ def playGame(playerOne, playerTwo):
 
 
 def main():
-    playerOne = RandomPlayer(EX)
+    playerOne = MiniMaxPlayer(EX)
     playerTwo = MiniMaxPlayer(OH)
     playGame(playerOne, playerTwo)
 
