@@ -25,6 +25,7 @@ def evaluateResult(board):
         print "Someone fucked up."
         return 42
 
+
 def playGame(playerOne, playerTwo):
     board = TicTacToeBoard()
     states = [[0.0] * (SIZE ** 2)]
@@ -35,6 +36,7 @@ def playGame(playerOne, playerTwo):
             playerTwo.makeMove(board)
         states.append(board.board.flatten().tolist())
     return states, evaluateResult(board)
+
 
 def recordData(f, states, win):
     if win == DRAW:
@@ -56,6 +58,7 @@ def recordData(f, states, win):
                 f.write('\n')
             flag = not flag
 
+
 def main():
     randomOne = players.RandomPlayer()
     randomTwo = players.RandomPlayer()
@@ -64,7 +67,8 @@ def main():
     contestantsTwo = [randomOne, minimaxOne]
     contestantsOne = [randomTwo, minimaxTwo]
     with open('seed_data.txt', 'w') as f:
-        for playerOne, playerTwo in itertools.product(contestantsOne, contestantsTwo):
+        for playerOne, playerTwo in itertools.product(contestantsOne,
+                                                      contestantsTwo):
             for i in xrange(EPOCHS):
                 print "Playing game {} of 10000".format(i)
                 if random.randint(0, 1):
