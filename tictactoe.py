@@ -1,4 +1,3 @@
-import numpy
 import random
 import players
 from board import TicTacToeBoard
@@ -6,7 +5,7 @@ from tracker import StatisticsTracker
 
 EX = 1
 OH = -1
-EPOCHS = 10
+EPOCHS = 50
 
 
 def playGame(playerOne, playerTwo):
@@ -37,12 +36,12 @@ def main():
     for i in xrange(EPOCHS):
         ex = True
         if random.randint(0, 1):
-            playerOne = players.RandomPlayer(EX)
+            playerOne = players.MinimaxPlayer(EX)
             playerTwo = players.MinimaxPlayer(OH)
         else:
             ex = False
             playerOne = players.MinimaxPlayer(EX)
-            playerTwo = players.RandomPlayer(OH)
+            playerTwo = players.MinimaxPlayer(OH)
         win = playGame(playerOne, playerTwo)
         tracker.recordGame(ex, win)
     tracker.printReport()

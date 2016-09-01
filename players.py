@@ -8,9 +8,6 @@ DRAW = 0.5
 
 class Player:
 
-    def __init__(self, marker):
-        self.marker = marker
-
     def getCandidateMoves(self, board):
         candidate_moves = []
         for i in xrange(board.SIZE):
@@ -18,6 +15,9 @@ class Player:
                 if board.board[i, j] == EMPTY:
                     candidate_moves.append((i, j))
         return candidate_moves
+
+    def setMarker(self, marker):
+        self.marker = marker
 
 
 class RandomPlayer(Player):
